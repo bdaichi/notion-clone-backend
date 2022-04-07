@@ -7,16 +7,26 @@ const port = process.env.PORT || 3001
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend-react/*')));
-// const connection = async () => {
-//   return await mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password:'',
-//   });
-// };
+
+const connection =  mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  });
+
+  connection.connect()
+    connection.query('select 1 as one', (err, results, fields) => {
+      if (err) throw err;
+  
+      for (const result of results) {
+          console.log(result.one);
+      }
+  });
+  
+  connection.end();
 
 app.get('/', (req: express.Request, res: express.Response) => {
-  res.send('tsこんにちは')
+  res.send('tsこんにち')
 })
 
 app.get("/api", (req, res) => {
