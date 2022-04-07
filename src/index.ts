@@ -1,5 +1,6 @@
 import  express  from "express"
-import * as mysql from "mysql";
+import * as mysql from "mysql2";
+import { RowDataPacket } from "mysql2";
 import path from "path";
  
 const app = express()
@@ -12,22 +13,22 @@ const connection =  mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
+  database: 'comic'
   });
-
-  connection.connect()
-    connection.query('select 1 as one', (err, results, fields) => {
-      if (err) throw err;
-  
-      for (const result of results) {
-          console.log(result.one);
-      }
-  });
-  
-  connection.end();
 
 app.get('/', (req: express.Request, res: express.Response) => {
-  res.send('tsこんにち')
-})
+  connection.connect()
+  connection.query(
+    'SELECT * FROM `list`',
+    function(err, results: RowDataPacket, fields) {
+      if(err) {
+        console.log("接続終了(異常)");
+        throw err;
+      }
+      res.json({message: results[0].title});
+    }
+  );
+  });
 
 app.get("/api", (req, res) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
