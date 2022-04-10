@@ -1,8 +1,7 @@
 import  express  from "express"
 import path from "path";
-import readUserData from "./mysql/user_mysql";
-
-
+import createUserData from "./mysql/user_mysql/create_user_data";
+import readUserData from "./mysql/user_mysql/read_user_data";
  
 const app = express()
 const port = process.env.PORT || 3001
@@ -11,9 +10,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../frontend-react/*')));
 
 
-app.get('/api', (req, res) => {
+app.get('/read_api', (req, res) => {
   readUserData(res, req)
 });
+
+app.get('/create_api', (req, res) => {
+  createUserData(req, res, 'daichihogehoge@icloud.com', 'mame')
+})
 
 app.get("/", (req, res) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000')

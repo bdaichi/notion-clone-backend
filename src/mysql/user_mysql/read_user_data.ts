@@ -1,4 +1,4 @@
-import { connection } from "./mysql";
+import { connection } from "../mysql";
 import { RowDataPacket } from "mysql2";
 
 export default function readUserData(res: any, req: any){
@@ -12,7 +12,8 @@ export default function readUserData(res: any, req: any){
         }
         res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
         res.status(201)
-        res.json({ user: results[0] });
+        res.json({ user: results[2] });
         }
     );
+    connection.end();
 }
