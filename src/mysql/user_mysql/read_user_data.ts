@@ -12,8 +12,8 @@ export default function readUserData(res: any, req: any){
         }
         res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
         res.status(201)
-        res.json({ user: results[2] });
+        res.json({ user: results[2].userId });
         }
     );
-    connection.end();
+   
 }
