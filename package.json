@@ -3,18 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "node ./src/*",
     "server": "nodemon ./bin/www",
     "client": "PORT=3002 npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" "
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "build": "tsc"
   },
   "dependencies": {
+    "@types/circular-json": "^0.4.0",
+    "axios": "^0.26.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "json-cyclic": "^1.0.2",
+    "morgan": "~1.9.1",
+    "mysql2": "^2.3.3",
+    "path": "^0.12.7"
   },
   "main": "app.js",
   "keywords": [],
@@ -23,6 +29,7 @@
   "description": "",
   "devDependencies": {
     "@types/express": "^4.17.13",
+    "@types/mysql": "^2.15.21",
     "@types/node": "^17.0.23",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3"
