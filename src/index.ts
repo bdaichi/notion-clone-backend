@@ -5,9 +5,10 @@ import path from "path";
 
 import createUserData from "./mysql/user_mysql/create_user_data";
 import readUserData from "./mysql/user_mysql/read_user_data";
-import ReadPagesData from "./mysql/page_mysql/read_all_page_data";
+
+import { ReadPageData, ReadPagesData } from "./mysql/page_mysql";
  
-export default function ExprresRouting() {
+
   const app = express()
   const port = process.env.PORT || 3001
 
@@ -15,12 +16,12 @@ export default function ExprresRouting() {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, '../../frontend-react/*')));
 
-  app.get('/read_api', (req, res) => {
-    readUserData(res, req)
-  });
-
   app.get('/read_pages', (req, res) => {
     ReadPagesData(res, req)
+  })
+
+  app.get('/read_page', (req, res) => {
+    ReadPageData(res, req)
   })
 
   app.post('/post_api', (req, res) => {
@@ -36,4 +37,4 @@ export default function ExprresRouting() {
   app.listen(port, () => {
     console.log(`listening on *:${port}`);
   }) 
-}
+
