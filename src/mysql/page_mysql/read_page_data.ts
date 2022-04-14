@@ -1,7 +1,7 @@
 import { connection } from "../mysql";
 import { RowDataPacket } from "mysql2";
 
-export default function ReadPagesData(res: any, req: any){
+export default function ReadPageData(res: any, req: any){
     connection.connect()
     connection.query(
         'SELECT * FROM pages',
