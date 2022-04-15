@@ -3,7 +3,7 @@ import axios from "axios";
 import bodyParser from "body-parser";
 import path from "path";
 
-import { ReadPageData, ReadPagesData } from "./mysql/page_mysql";
+import { ReadPageData, ReadOriginallyPagesData, ReadUserPagesData } from "./mysql/page_mysql";
 import { ReadContensData } from "./mysql/content_mysql";
  
 
@@ -14,8 +14,12 @@ import { ReadContensData } from "./mysql/content_mysql";
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, '../../frontend-react/*')));
 
-  app.get('/read_pages', (req, res) => {
-    ReadPagesData(res, req)
+  app.get('/read_originally_pages', (req, res) => {
+    ReadOriginallyPagesData(res, req)
+  })
+
+  app.get('/read_user_pages', (req, res) => {
+    ReadUserPagesData(res, req)
   })
 
   app.get('/read_page', (req, res) => {
