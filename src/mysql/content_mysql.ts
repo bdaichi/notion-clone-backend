@@ -1,10 +1,10 @@
-import { connection } from "../mysql";
+import { connection } from "./mysql";
 import { RowDataPacket } from "mysql2";
 
-export default function readUserData(res: any, req: any){
+export async function ReadContensData(res: any, req: any){
     connection.connect()
     connection.query(
-        'SELECT * FROM users',
+        "SELECT * FROM contents WHERE contentId='bfb08fc7-4c18-4876-9889-39156a89a322'",
         function(err, results: RowDataPacket, fields) {
         if(err) {
             console.log("接続終了(異常)");
@@ -12,7 +12,7 @@ export default function readUserData(res: any, req: any){
         }
         res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
         res.status(201)
-        res.json({ user: results[2].userId });
+        res.json({ contents: results });
         }
     );
    

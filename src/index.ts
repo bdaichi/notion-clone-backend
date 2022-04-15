@@ -3,10 +3,8 @@ import axios from "axios";
 import bodyParser from "body-parser";
 import path from "path";
 
-import createUserData from "./mysql/user_mysql/create_user_data";
-import readUserData from "./mysql/user_mysql/read_user_data";
-
 import { ReadPageData, ReadPagesData } from "./mysql/page_mysql";
+import { ReadContensData } from "./mysql/content_mysql";
  
 
   const app = express()
@@ -23,6 +21,11 @@ import { ReadPageData, ReadPagesData } from "./mysql/page_mysql";
   app.get('/read_page', (req, res) => {
     ReadPageData(res, req)
   })
+
+  app.get('/read_contents', (req, res) => {
+    ReadContensData(res, req)
+  })
+
 
   app.post('/post_api', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*')

@@ -21,7 +21,7 @@ export async function ReadPagesData(res: any, req: any){
 export async function ReadPageData(res: any, req: any){
     connection.connect()
     connection.query(
-        "SELECT * FROM pages WHERE pageId='12345'",
+        "SELECT * FROM pages WHERE pageId='todoList'",
         function(err, results: RowDataPacket, fields) {
         if(err) {
             console.log("接続終了(異常)");
