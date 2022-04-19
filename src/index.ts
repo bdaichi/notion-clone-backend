@@ -5,6 +5,7 @@ import path from "path";
 
 import { ReadPageData, ReadOriginallyPagesData, ReadUserPagesData } from "./mysql/page_mysql";
 import { ReadContensData } from "./mysql/content_mysql";
+import { ReadSubPagesData } from "./mysql/sub_page_mysql";
  
 
   const app = express()
@@ -24,6 +25,10 @@ import { ReadContensData } from "./mysql/content_mysql";
 
   app.get('/read_page', (req, res) => {
     ReadPageData(res, req)
+  })
+
+  app.get('/read_subPages', (req, res) => {
+    ReadSubPagesData(res, req)
   })
 
   app.get('/read_contents', (req, res) => {
