@@ -1,10 +1,10 @@
 import { connection } from "./mysql";
 import { RowDataPacket } from "mysql2";
 
-export async function ReadContensData(res: any, req: any){
+export async function ReadUserData(res: any, req: any){
     connection.connect()
     connection.query(
-        "SELECT * FROM contents WHERE hostPageId='bfb08fc7-4c18-4876-9889-39156a89a323'",
+        "SELECT * FROM users WHERE userId='daichi@gmail.com' AND signInPassword='daichi2002'",
         function(err, results: RowDataPacket, fields) {
         if(err) {
             console.log("接続終了(異常)");
@@ -12,7 +12,7 @@ export async function ReadContensData(res: any, req: any){
         }
         res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
         res.status(201)
-        res.json({ contents: results });
+        res.json({ user: results });
         }
     );
    

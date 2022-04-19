@@ -6,6 +6,7 @@ import path from "path";
 import { ReadPageData, ReadOriginallyPagesData, ReadUserPagesData } from "./mysql/page_mysql";
 import { ReadContensData } from "./mysql/content_mysql";
 import { ReadSubPagesData } from "./mysql/sub_page_mysql";
+import { ReadUserData } from "./mysql/user_mysql";
  
 
   const app = express()
@@ -14,6 +15,10 @@ import { ReadSubPagesData } from "./mysql/sub_page_mysql";
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, '../../frontend-react/*')));
+
+  app.get('/read_user', (req, res) => {
+    ReadUserData(res, req)
+  })
 
   app.get('/read_originally_pages', (req, res) => {
     ReadOriginallyPagesData(res, req)
