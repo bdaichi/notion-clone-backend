@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import path from "path";
 
 import { ReadPageData, ReadOriginallyPagesData, ReadUserPagesData } from "./mysql/page_mysql";
-import { ReadContensData } from "./mysql/content_mysql";
+import { CreateContentData, DeleteContentData, ReadContensData, UpdateContentData } from "./mysql/content_mysql";
 import { ReadSubPagesData } from "./mysql/sub_page_mysql";
 import { ReadUserData } from "./mysql/user_mysql";
  
@@ -36,8 +36,20 @@ import { ReadUserData } from "./mysql/user_mysql";
     ReadSubPagesData(res, req)
   })
 
+  app.get('/create_content', (req, res) => {
+    CreateContentData()
+  })
+
   app.get('/read_contents', (req, res) => {
     ReadContensData(res, req)
+  })
+
+  app.get('/update_content', (req, res) => {
+    UpdateContentData('')
+  })
+
+  app.get('/delete_content', (req, res) => {
+    DeleteContentData('')
   })
 
 
