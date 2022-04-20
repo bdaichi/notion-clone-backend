@@ -1,13 +1,11 @@
 import express from "express"
-import axios from "axios";
-import bodyParser from "body-parser";
+import cors from 'cors';
 import path from "path";
 
-import { ReadPageData, ReadOriginallyPagesData, ReadUserPagesData } from "./mysql/page_mysql";
+import {  CreatePageData, ReadOriginallyPagesData, ReadUserPagesData } from "./mysql/page_mysql";
 import { CreateContentData, DeleteContentData, ReadContensData, UpdateContentData } from "./mysql/content_mysql";
 import { ReadSubPagesData } from "./mysql/sub_page_mysql";
 import { ReadUserData } from "./mysql/user_mysql";
- 
 
   const app = express()
   const port = process.env.PORT || 3001
@@ -15,27 +13,32 @@ import { ReadUserData } from "./mysql/user_mysql";
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, '../../frontend-react/*')));
+  app.use(cors())
 
+  // ↓↓↓　user
   app.get('/read_user', (req, res) => {
     ReadUserData(res, req)
   })
 
+  // ↓↓↓　page
   app.get('/read_originally_pages', (req, res) => {
     ReadOriginallyPagesData(res, req)
+  })
+
+  app.post('/create_page', (req, res) => {
+    CreatePageData(req, res)
   })
 
   app.get('/read_user_pages', (req, res) => {
     ReadUserPagesData(res, req)
   })
 
-  app.get('/read_page', (req, res) => {
-    ReadPageData(res, req)
-  })
-
+// ↓↓↓　subpage
   app.get('/read_subPages', (req, res) => {
     ReadSubPagesData(res, req)
   })
 
+// ↓↓↓　content
   app.get('/create_content', (req, res) => {
     CreateContentData()
   })
@@ -50,17 +53,6 @@ import { ReadUserData } from "./mysql/user_mysql";
 
   app.get('/delete_content', (req, res) => {
     DeleteContentData('')
-  })
-
-
-  app.post('/post_api', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Headers', '*')
-    res.status(201)
-    console.log('fetch_front_data', req.body.patams)
-    res.json({
-      msg: "success",
-  });
   })
 
   app.listen(port, () => {
