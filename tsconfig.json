@@ -11,4 +11,10 @@
   "include": [
     "src/**/*", 
     "src/index.ts"  ],
+  "axsios" : {
+    "proxy": true
+  },
+  "proxy": {
+    "/": { "target": "http://localhost:3000" }
+  }
 }
