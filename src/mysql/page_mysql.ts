@@ -21,33 +21,12 @@ export async function CreatePageData(req: any, res: any) {
   );
 }
 
-export async function CreateOriginallyPage(res: any, req: any) {
+export async function CreateOriginallyPage(req: any, res: any) {
   const userId = req.body.userId;
+  console.log("createOriginallypage", userId);
   connection.connect();
   connection.query(
-    `INSERT INTO pages (pageId, pageName, userId) VALUES('todoList', 'todoリスト', 'daichi@icloud.com');`,
-    function (err, results: RowDataPacket, fields) {
-      if (err) {
-        console.log("createpage", err);
-      } else {
-        res.json({ result: "http://localhost:3000" });
-        console.log(results);
-      }
-    }
-  );
-  connection.query(
-    `INSERT INTO pages (pageId, pageName, userId) VALUES('quickMemo'', 'クイックメモ', 'daichi@icloud.com');`,
-    function (err, results: RowDataPacket, fields) {
-      if (err) {
-        console.log("createpage", err);
-      } else {
-        res.json({ result: "http://localhost:3000" });
-        console.log(results);
-      }
-    }
-  );
-  connection.query(
-    `INSERT INTO pages (pageId, pageName, userId) VALUES('tryUsing', '使ってみよう', '${userId}');`,
+    `INSERT INTO pages (pageId, pageName, userId) VALUES('todoList', 'todoリスト', '${userId}'),('quickMemo', 'クイックメモ', '${userId}'),('tryUsing', '使ってみよう', '${userId}');`,
     function (err, results: RowDataPacket, fields) {
       if (err) {
         console.log("createpage", err);
@@ -63,7 +42,7 @@ export async function ReadOriginallyPagesData(req: any, res: any) {
   const userId = req.body.userId;
   connection.connect();
   connection.query(
-    `SELECT * FROM pages WHERE pageId in ('quickMemo', 'tryUsing', 'todoList') AND userId='daichi@icloud.com'`,
+    `SELECT * FROM pages WHERE pageId in ('quickMemo', 'tryUsing', 'todoList') AND userId='${userId}'`,
     function (err, results: RowDataPacket, fields) {
       if (err) {
         console.log("接続終了(異常)");
@@ -80,7 +59,7 @@ export async function ReadUserPagesData(req: any, res: any) {
   const userId = req.body.userId;
   connection.connect();
   connection.query(
-    `SELECT * FROM pages WHERE pageId not in ('quickMemo', 'tryUsing', 'todoList') AND userId='daichi@icloud.com'`,
+    `SELECT * FROM pages WHERE pageId not in ('quickMemo', 'tryUsing', 'todoList') AND userId='${userId}'`,
     function (err, results: RowDataPacket, fields) {
       if (err) {
         console.log("接続終了(異常)");
@@ -93,7 +72,7 @@ export async function ReadUserPagesData(req: any, res: any) {
   );
 }
 
-export async function UpdatePageData(req: any, res: any, pageId: string) {
+export async function UpdatePageData(req: any, res: any) {
   connection.connect();
   connection.query(
     "UPDATE pages SET pageId='変更した' WHERE pageId='quickMemo'",
@@ -108,13 +87,24 @@ export async function UpdatePageData(req: any, res: any, pageId: string) {
   );
 }
 
-export async function DeletePageData(pageId: string) {
+export async function DeletePageData(req: any, res: any) {
+  const pageId = req.body.pageId;
   connection.connect();
   connection.query(
-    "DELETE FROM pages WHERE pageId='pageId'",
+    `DELETE FROM pages WHERE pageId='${pageId}'`,
     function (err, results: RowDataPacket, fields) {
       if (err) {
         console.log("deletepage", err);
+      } else {
+        console.log(results);
+      }
+    }
+  );
+  connection.query(
+    `DELETE FROM subPages WHERE hostPageId='${pageId}'`,
+    function (err, results: RowDataPacket, fields) {
+      if (err) {
+        console.log("deletesubPage", err);
       } else {
         console.log(results);
       }

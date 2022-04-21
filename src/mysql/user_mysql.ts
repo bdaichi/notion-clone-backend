@@ -3,6 +3,7 @@ import { RowDataPacket } from "mysql2";
 
 export async function CreateUserData(req: any, res: any) {
   const user = req.body.user;
+  console.log("createUser", user.userId, user.signInPassword);
   connection.connect();
   connection.query(
     `INSERT INTO users (userId, signInPassword) VALUES('${user.userId}','${user.signInPassword}')`,
@@ -12,6 +13,7 @@ export async function CreateUserData(req: any, res: any) {
       } else {
         res.header("Access-Control-Allow-Origin", "http://localhost:3000");
         res.status(201);
+        res.json({ result: "http://localhost:3000" });
         console.log(results);
       }
     }
@@ -21,9 +23,10 @@ export async function CreateUserData(req: any, res: any) {
 export async function ReadUserData(req: any, res: any) {
   const userId = req.body.userId;
   const signInPassword = req.body.signInPassword;
+  console.log(userId, signInPassword);
   connection.connect();
   connection.query(
-    `SELECT * FROM users WHERE userId='daichi@icloud.com' AND signInPassword='daichi2002'`,
+    `SELECT * FROM users WHERE userId='${userId}' AND signInPassword='${signInPassword}'`,
     function (err, results: RowDataPacket, fields) {
       if (err) {
         console.log("接続終了(異常)");
@@ -31,7 +34,7 @@ export async function ReadUserData(req: any, res: any) {
       }
       res.header("Access-Control-Allow-Origin", "http://localhost:3000");
       res.status(201);
-      console.log(results.data);
+      console.log("readUser", results);
       res.json({ user: results });
     }
   );

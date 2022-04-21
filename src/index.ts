@@ -3,7 +3,9 @@ import cors from "cors";
 import path from "path";
 
 import {
+  CreateOriginallyPage,
   CreatePageData,
+  DeletePageData,
   ReadOriginallyPagesData,
   ReadUserPagesData,
   UpdatePageData,
@@ -46,7 +48,7 @@ app.post("/create_page", (req, res) => {
 });
 
 app.post("/create_originally_page", (req, res) => {
-  ReadOriginallyPagesData(req, res);
+  CreateOriginallyPage(req, res);
 });
 
 app.post("/read_originally_pages", (req, res) => {
@@ -58,11 +60,11 @@ app.post("/read_user_pages", (req, res) => {
 });
 
 app.get("/update_page", (req, res) => {
-  UpdatePageData(req, res, "");
+  UpdatePageData(req, res);
 });
 
-app.get("/delete_page", (req, res) => {
-  // DeletePageData('')
+app.post("/delete_page", (req, res) => {
+  DeletePageData(req, res);
 });
 
 // ↓↓↓　subpage

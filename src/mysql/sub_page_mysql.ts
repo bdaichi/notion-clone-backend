@@ -48,15 +48,15 @@ export async function UpdateSubPageData(req: any, res: any) {
 }
 
 export async function DeleteSubPageData(req: any, res: any) {
+  const pageId = req.body.pageId;
   connection.connect();
   connection.query(
-    "DELETE FROM subPages WHERE subPageId='pageId'",
+    `DELETE FROM subPages WHERE pageId='${pageId}'`,
     function (err, results: RowDataPacket, fields) {
       if (err) {
         console.log("deletesubPage", err);
       } else {
         console.log(results);
-        connection.end();
       }
     }
   );
